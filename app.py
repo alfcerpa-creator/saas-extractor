@@ -56,8 +56,9 @@ class DataRefiner:
         
         # TRIPLE VERIFICACIÓN DE DUPLICADOS (Teléfono, Web, Dirección)
         # 1. Filtro por Teléfono (excluyendo N/As)
-        valid_phones = df[~df['Teléfono'].isin(['N/A', 'Nodisponible', '', 'None', 'Nocuentacon'] drivers=[])]
-        invalid_phones = df[df['Teléfono'].isin(['N/A', 'Nodisponible', '', 'None', 'Nocuentacon'])]
+        # Corregido de forma limpia para evitar el error de sintaxis:
+        valid_phones = df[~df['Teléfono'].isin(['N/A', 'No disponible', '', 'None'])]
+        invalid_phones = df[df['Teléfono'].isin(['N/A', 'No disponible', '', 'None'])]
         df_clean = pd.concat([valid_phones.drop_duplicates(subset=['Teléfono']), invalid_phones], ignore_index=True)
         
         # 2. Filtro por Sitio Web
